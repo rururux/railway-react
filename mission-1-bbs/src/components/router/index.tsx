@@ -9,16 +9,16 @@ const RouteContext = createContext<{ currentPath: string, historyStore: HistoryS
 
 function getPathParams(historyStore: HistoryStore, _routePath: string): { [params: string]: string } | null {
   const routePath = _routePath.startsWith("/")? _routePath : "/" + _routePath
-  // :path 式の Route Path を名前付きキャプチャグループに変換
-  const routeRegExp = new RegExp(routePath.replace(/(?<=\/)(:[^/]+)/g, match => `(?<${match.replace(/^:/, "")}>[^/]+)`))
   const currentPath = historyStore.getSnapshot()
-  const execResult = routeRegExp.exec(currentPath)
 
-  if (execResult) {
-    return execResult.groups ?? {}
+  if (/(?<=\/):[^/]+/.test(routePath)) {
+    // :path 式の Route Path を名前付きキャプチャグループに変換
+    const routeRegExp = new RegExp(routePath.replace(/(?<=\/)(:[^/]+)/g, match => `(?<${match.replace(/^:/, "")}>[^/]+)`))
+
+    return routeRegExp.exec(currentPath)?.groups ?? {}
+  } else {
+    return currentPath === routePath? {} : null
   }
-
-  return null
 }
 
 export function Routes({ children }: PropsWithChildren) {
