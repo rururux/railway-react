@@ -1,12 +1,20 @@
 .header {
+  color: white;
   background-color: #66d48b;
   padding-block: 2rem;
   padding-inline: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .headerTitle {
-  color: white;
   font-size: 2rem;
+}
+
+.createThreadLink {
+  font-size: 1.25rem;
+  text-decoration: underline;
 }
 
 .main {
