@@ -1,0 +1,32 @@
+.pageTitle {
+  font-size: 2rem;
+}
+
+.threadTitleInput {
+  width: 100%;
+  background-color: white;
+  margin-block: 3rem;
+  padding-inline: 0.5rem;
+  padding-block: 1.25rem;
+}
+
+.formFooter {
+  display: flex;
+  justify-content: space-between;
+}
+
+.backLink {
+  font-size: 1.25rem;
+  color: blue;
+  text-decoration: underline;
+  margin-left: 1rem;
+}
+
+.submit {
+  font-size: 1.25rem;
+  color: white;
+  background-color: #66d48b;
+  padding-inline: 2.5rem;
+  padding-block: 0.5rem;
+  border-radius: 8px;
+}

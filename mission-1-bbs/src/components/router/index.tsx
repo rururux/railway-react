@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useSyncExternalStore, ty
 import { HistoryStore } from "../../store/historyStore"
 import { ParamsContext } from "../../hooks/useParams"
 
-const RouteContext = createContext<{ currentPath: string, historyStore: HistoryStore }>({
+export const RouteContext = createContext<{ currentPath: string, historyStore: HistoryStore }>({
   currentPath: "/",
   historyStore: null!
 })
