@@ -1,0 +1,15 @@
+.header {
+  background-color: #66d48b;
+  padding-block: 2rem;
+  padding-inline: 3rem;
+}
+
+.headerTitle {
+  color: white;
+  font-size: 2rem;
+}
+
+.main {
+  background-color: #d9d9d9;
+  min-height: 100dvh;
+}
