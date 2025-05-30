@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react"
 
-export const ParamsContext = createContext<{ params: { [param: string]: string } | undefined }>({
-  params: undefined
+export const ParamsContext = createContext<{ params: { [param: string]: string } }>({
+  params: {}
 })
 
-export function useParams() {
+export function useParams<T extends { [param: string]: string }>() {
   const { params } = useContext(ParamsContext)
 
-  return params
+  return params as T
 }

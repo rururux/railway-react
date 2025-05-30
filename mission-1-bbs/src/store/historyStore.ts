@@ -32,6 +32,7 @@ export class HistoryStore {
 
   removeListener() {
     this.#abortContoller.abort()
+    this.#abortContoller = new AbortController()
   }
 
   goTo(newPath: string) {

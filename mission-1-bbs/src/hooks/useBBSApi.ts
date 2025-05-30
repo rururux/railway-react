@@ -1,7 +1,7 @@
 import useSWR from "swr"
 import type { ThreadListGetResponse, PostListGetResponse, ErrorReponse } from "../types"
 
-type ValidPath = "/threads" | `/theads/${number}/posts`
+type ValidPath = "/threads" | `/threads/${string}/posts?offset=${number}`
 
 export function useBBSApi<T extends ValidPath>(path: T) {
   const resp = useSWR<
