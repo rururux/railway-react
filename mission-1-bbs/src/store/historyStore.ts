@@ -36,7 +36,7 @@ export class HistoryStore {
 
   goTo(newPath: string) {
     history.pushState(null, "", newPath)
-    this.#currentPath = newPath
+    this.#currentPath = new URL(newPath).pathname
     this.#callListeners()
   }
 }
