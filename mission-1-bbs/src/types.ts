@@ -1,9 +1,9 @@
-interface ThreadData {
+export interface ThreadData {
   id: string
   title: string
 }
 
-interface PostData {
+export interface PostData {
   id: string
   post: string
 }
