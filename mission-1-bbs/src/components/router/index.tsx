@@ -15,7 +15,7 @@ function getPathParams(historyStore: HistoryStore, _routePath: string): { [param
     // :path 式の Route Path を名前付きキャプチャグループに変換
     const routeRegExp = new RegExp(routePath.replace(/(?<=\/)(:[^/]+)/g, match => `(?<${match.replace(/^:/, "")}>[^/]+)`))
 
-    return routeRegExp.exec(currentPath)?.groups ?? {}
+    return routeRegExp.exec(currentPath)?.groups ?? null
   } else {
     return currentPath === routePath? {} : null
   }
