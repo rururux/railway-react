@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState, type Dispatch, type SetStateAction } from "react"
+import { createContext, useCallback, useContext, useState, type Dispatch, type FormEventHandler, type SetStateAction } from "react"
 import type { PostData, PostListGetResponse, ThreadData, ThreadListGetResponse } from "../types"
 
 const baseUrl = "https://railway.bulletinboard.techtrain.dev"
@@ -42,9 +42,30 @@ export function useThread(threadId: string, offset: number) {
     .sort(([ offsetA ], [ offsetB ]) => offsetA - offsetB)
     .flatMap(entries => entries[1])
 
+  const createPost: FormEventHandler<HTMLFormElement> = e => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const post = formData.get("post")
+
+    if (post === undefined) return
+
+    fetch(`${baseUrl}/threads/${threadId}/posts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ post })
+    }).then(r => {
+      if (r.ok) {
+        loadPosts()
+      } else {
+        console.error(r.status)
+        r.json().then(console.error)
+      }
+    })
+  }
+
   if (threadData === undefined) {
     throw new Error("thread not found")
   }
 
-  return { threadData, posts, loadPosts }
+  return { threadData, posts, loadPosts, createPost }
 }

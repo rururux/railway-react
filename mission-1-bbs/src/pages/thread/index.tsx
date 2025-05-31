@@ -6,21 +6,27 @@ import styles from "./styles.module.css"
 export function ThreadPage() {
   const { thread_id: threadId } = useParams<{ thread_id: string }>()
   const [ offset ] = useState(0)
-  const { threadData, posts, loadPosts } = useThread(threadId, offset)
+  const { threadData, posts, loadPosts, createPost } = useThread(threadId, offset)
 
   useEffect(() => {
     loadPosts()
   }, [ loadPosts ])
 
   return (
-    <div>
+    <div className={styles.container}>
+      <h2 className={styles.threadTitle}>{threadData.title}</h2>
       <div className={styles.leftContainer}>
-        <h2 className={styles.threadTitle}>{threadData.title}</h2>
         <ol className={styles.posts}>
           {posts.map(post => (
             <li className={styles.post} key={post.id}>{post.post}</li>
           ))}
         </ol>
+      </div>
+      <div className={styles.rightContainer}>
+        <form className={styles.form} onSubmit={createPost}>
+          <textarea className={styles.textArea} name="post" placeholder="投稿しよう！" />
+          <button className={styles.submitButton}>投稿</button>
+        </form>
       </div>
     </div>
   )

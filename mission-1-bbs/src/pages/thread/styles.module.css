@@ -1,10 +1,14 @@
-.leftContainer {
-  width: 600px;
+.container {
+  display: grid;
+  grid-template-columns: 600px 300px;
+  grid-template-rows: min-content auto;
+  column-gap: 2rem;
 }
 
 .threadTitle {
   font-size: 2rem;
   padding-block: 2rem;
+  grid-column: 1 / -1;
 }
 
 .posts {
@@ -17,4 +21,27 @@
   background-color: white;
   padding-left: 2rem;
   padding-block: 1.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.textArea {
+  background-color: white;
+  height: 5rem;
+  padding: 1rem;
+
+  &::placeholder {
+    color: gray;
+  }
+}
+
+.submitButton {
+  background-color: #66d48b;
+  width: 100%;
+  padding-block: 1rem;
+  text-align: center;
 }
