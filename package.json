@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "mission-4-ssr:dev": "vite ./mission-4-ssr -c ./vite.config.ts"
+    "mission-4-ssr:dev": "vite ./mission-4-ssr -c ./vite.config.ts",
+    "mission-4-ssr:build": "vite build ./mission-4-ssr -c ./vite.config.ts",
+    "mission-4-ssr:preview": "vite preview ./mission-4-ssr -c ./vite.config.ts"
   },
   "dependencies": {
     "react": "^19.1.0",
