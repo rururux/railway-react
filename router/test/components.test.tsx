@@ -5,6 +5,7 @@ import { RouteContext } from "../context"
 import { HistoryStore } from "../historyStore"
 import { MouseEvent } from "react"
 import { Route } from "../components/Route"
+import { Routes } from "../components/Routes"
 
 describe("Link", () => {
   test("handleClick", async () => {
@@ -48,7 +49,7 @@ describe("Link", () => {
 
 describe("Route", () => {
   test("render", async () => {
-    const initialPath = location.pathname as `/${string}`
+    const initialPath = "/"
     const historyStore = new HistoryStore(initialPath)
     const screen = render(
       <RouteContext.Provider value={{ currentPath: initialPath, historyStore }}>
@@ -64,10 +65,26 @@ describe("Route", () => {
     const historyStore = new HistoryStore(initialPath)
     const screen = render(
       <RouteContext.Provider value={{ currentPath: initialPath, historyStore }}>
-        <Route path={"/test"} element={<div data-testId="div" />} />
+        <Route path="/test" element={<div data-testId="div" />} />
       </RouteContext.Provider>
     )
 
     await expect.element(screen.getByTestId("div")).not.toBeInTheDocument()
+  })
+})
+
+describe("Routes", () => {
+  test("render", async () => {
+    const initialPath = "/"
+    const historyStore = new HistoryStore(initialPath)
+    const screen = render(
+      <RouteContext.Provider value={{ currentPath: initialPath, historyStore }}>
+        <Routes>
+          <Route path="/" element={<div data-testId="div" />} />
+        </Routes>
+      </RouteContext.Provider>
+    )
+
+    await expect.element(screen.getByTestId("div")).toBeInTheDocument()
   })
 })
