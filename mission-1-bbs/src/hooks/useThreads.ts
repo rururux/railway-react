@@ -63,9 +63,9 @@ export function useThread(threadId: string, offset: number) {
     })
   }
 
-  if (threadData === undefined) {
-    throw new Error("thread not found")
-  }
+  // if (threadData === undefined) {
+  //   throw new Error("thread not found")
+  // }
 
   return { threadData, posts, loadPosts, createPost }
 }

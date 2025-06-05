@@ -12,6 +12,8 @@ export function ThreadPage() {
     loadPosts()
   }, [ loadPosts ])
 
+  if (threadData === undefined) return null
+
   return (
     <div className={styles.container}>
       <h2 className={styles.threadTitle}>{threadData.title}</h2>
