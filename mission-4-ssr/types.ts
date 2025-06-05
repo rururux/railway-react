@@ -1,0 +1,1 @@
+export interface Quote { meigen: string, auther: string }

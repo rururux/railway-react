@@ -3,12 +3,31 @@
 import fs from "node:fs/promises"
 import express, { type Response } from "express"
 import type { ViteDevServer } from "vite"
+import type { Quote } from "./types.js"
+import sanitizeHtml from "sanitize-html"
 
 const isProduction = process.env.NODE_ENV === "production"
+
+async function getQuote() {
+  const meigens = await fetch("https://meigen.doodlenote.net/api/json.php").then<{ meigen: string, auther: string }[]>(r => r.json())
+
+  return meigens[0]
+}
+
+function is404(path: string) {
+  return !([ "/", "/profile" ].includes(path))
+}
 
 ;(async () => {
   const app = express()
   let vite: ViteDevServer
+
+  app.get("/api/quotes", async (_req, res) => {
+    const quote = await getQuote()
+
+    res.setHeader("Content-Type", "application/json")
+    res.end(JSON.stringify(quote))
+  })
 
   if (!isProduction) {
     const { createServer: createViteServer } = await import("vite")
@@ -29,7 +48,7 @@ const isProduction = process.env.NODE_ENV === "production"
 
     try {
       let template: string
-      let render: (path: string, res: Response) => Promise<void>
+      let render: (path: string, res: Response, initialQuote: Quote | null) => Promise<void>
 
       if (!isProduction) {
         template = await fs.readFile("./mission-4-ssr/index.html", "utf-8")
@@ -43,10 +62,16 @@ const isProduction = process.env.NODE_ENV === "production"
       }
 
       const htmlParts = template.split("<!--ssr-outlet-->")
+      let quote = null
+
+      if (is404(req.originalUrl)) {
+        quote = await getQuote()
+      }
 
       res.status(200).set({ "Content-Type": "text/html" })
       res.write(htmlParts[0])
-      await render(req.path, res)
+      res.write(`<script>window.__INITIAL_QUOTE__ = ${sanitizeHtml(JSON.stringify(quote))};</script>`)
+      await render(req.originalUrl, res, quote)
       res.end(htmlParts[1])
     } catch (e) {
       if (e instanceof Error && vite !== undefined) {
