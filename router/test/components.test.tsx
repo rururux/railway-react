@@ -75,14 +75,10 @@ describe("Route", () => {
 
 describe("Routes", () => {
   test("render", async () => {
-    const initialPath = "/"
-    const historyStore = new HistoryStore(initialPath)
     const screen = render(
-      <RouteContext.Provider value={{ currentPath: initialPath, historyStore }}>
-        <Routes>
-          <Route path="/" element={<div data-testId="div" />} />
-        </Routes>
-      </RouteContext.Provider>
+      <Routes>
+        <Route path="/" element={<div data-testId="div" />} />
+      </Routes>
     )
 
     await expect.element(screen.getByTestId("div")).toBeInTheDocument()
