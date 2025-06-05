@@ -29,7 +29,7 @@ const isProduction = process.env.NODE_ENV === "production"
 
     try {
       let template: string
-      let render: (res: Response) => Promise<void>
+      let render: (path: string, res: Response) => Promise<void>
 
       if (!isProduction) {
         template = await fs.readFile("./mission-4-ssr/index.html", "utf-8")
@@ -46,7 +46,7 @@ const isProduction = process.env.NODE_ENV === "production"
 
       res.status(200).set({ "Content-Type": "text/html" })
       res.write(htmlParts[0])
-      await render(res)
+      await render(req.path, res)
       res.end(htmlParts[1])
     } catch (e) {
       if (e instanceof Error && vite !== undefined) {
