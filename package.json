@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "mission-3": "pnpm -F \"mission-3-book-review\"",
     "mission-4-ssr:dev": "vite ./mission-4-ssr -c ./vite.config.ts",
     "mission-4-ssr:build": "pnpm run mission-4-ssr:build:client && pnpm run mission-4-ssr:build:server",
     "mission-4-ssr:build:client": "vite build ./mission-4-ssr -c ./vite.config.ts --outDir ./dist/client",

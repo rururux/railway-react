@@ -1,3 +1,6 @@
+packages:
+  - "mission-3-book-review"
+
 onlyBuiltDependencies:
   - '@swc/core'
   - '@tailwindcss/oxide'
