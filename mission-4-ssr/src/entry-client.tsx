@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 import App from './App.tsx'
 import type { Quote } from "../types.ts"
 
@@ -8,8 +8,8 @@ declare global {
   var __INITIAL_QUOTE__: Quote | null
 }
 
-createRoot(document.getElementById('root')!).render(
+hydrateRoot(document.getElementById('root')!,
   <StrictMode>
     <App initialQuote={window.__INITIAL_QUOTE__} />
-  </StrictMode>,
+  </StrictMode>
 )
