@@ -5,7 +5,7 @@ export default function ProfilePage() {
 
   return (
     <div className="w-md p-8 rounded-xl bg-white/70 backdrop-blur-md grid justify-items-center gap-2">
-      <img className="w-40 rounded-full" src="profile.jpg" alt="プロフィール画像" />
+      <img className="w-40 rounded-full aspect-square" src="profile.jpg" alt="プロフィール画像" />
       <p className="text-2xl font-bold">Rafael ヤスヒデ 須藤</p>
       <p className="text-lg text-gray-700">駆け出しエンジニア見習い</p>
       <div className="text-gray-800 flex flex-col items-center py-6">
