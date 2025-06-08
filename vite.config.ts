@@ -31,6 +31,21 @@ export default defineConfig({
           },
           include: [ "./router/test/*.test.tsx" ]
         }
+      },
+
+      {
+        test: {
+          name: "m3-browser",
+          browser: {
+            provider: "playwright",
+            enabled: true,
+            headless: true,
+            instances: [
+              { browser: "chromium" }
+            ],
+          },
+          include: [ "./mission-3-book-review/tests/**/*.test.tsx" ]
+        }
       }
     ]
   },
