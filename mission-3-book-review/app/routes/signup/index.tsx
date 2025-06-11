@@ -1,11 +1,22 @@
 import { useEffect, useId, useState, type ChangeEventHandler } from "react"
-import { Link, useActionData, useSubmit } from "react-router"
+import { Link, redirect, useActionData, useSubmit } from "react-router"
 import { ZodError } from "zod/v4"
 import type { Route } from "./+types"
 import { useForm } from "../../hooks/useForm"
 import { SignUpSchema, type SignUpSchemaValue } from "../../schemas"
 import createRHFErrorData from "../../utils/createRHFErrorData"
 import Compressor from "compressorjs"
+import { authCookie } from "~/.server/cookies"
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const cookies = request.headers.get("Cookie")
+  const token = await authCookie.parse(cookies)
+
+  if (token === null) return
+
+  // token が生きてるかの確認はあとで行う
+  return redirect("/home")
+}
 
 export async function action({ request }: Route.ActionArgs) {
   try {
@@ -14,13 +25,41 @@ export async function action({ request }: Route.ActionArgs) {
       return { ...prv, [cur[0]]: cur[1] }
     }, {} as { [key: string]: unknown })
     const result = SignUpSchema.parse(requestData)
+    const { icon, ...userData } = result
 
-    // const response = await fetch("https://railway.bookreview.techtrain.dev/signup", {
-    //   method: "POST",
-    //   body: Object.entries(result).reduce((prv, cur) => (prv.append(cur[0], cur[1]), prv), new FormData())
-    // })
+    const signUpResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData)
+    })
+    const signUpResponseData = await signUpResponse.json()
 
-    // TODO
+    if (signUpResponse.ok !== true || "token" in signUpResponseData !== true) {
+      console.error(signUpResponseData)
+      throw new Error()
+    }
+
+    const formData = new FormData()
+
+    formData.append("icon", icon)
+
+    const uploadImageResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/uploads`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${signUpResponseData.token}`,
+        "Content-Type": "application/xxx"
+      },
+      body: formData
+    })
+
+    if (uploadImageResponse.ok !== true) {
+      const uploadImageResponseData = await uploadImageResponse.json()
+
+      console.error(uploadImageResponseData)
+      throw new Error()
+    }
+
+    return redirect("/home", { headers: { "Set-Cookie": await authCookie.serialize(signUpResponseData.token) } })
   } catch (e) {
     if (e instanceof ZodError) {
       return createRHFErrorData(e)

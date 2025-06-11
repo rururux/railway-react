@@ -1,23 +1,41 @@
 import type { Route } from "./+types"
 import { useEffect, useId, useState } from "react"
-import { Link, useActionData, useSubmit } from "react-router"
+import { Link, redirect, useActionData, useSubmit } from "react-router"
 import { ZodError } from "zod/v4"
 import { useForm } from "../../hooks/useForm"
 import { LoginSchema, type LoginSchemaValue } from "../../schemas"
 import createRHFErrorData from "../../utils/createRHFErrorData"
+import { authCookie } from "~/.server/cookies"
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const cookies = request.headers.get("Cookie")
+  const token = await authCookie.parse(cookies)
+
+  if (token === null) return
+
+  // token が生きてるかの確認はあとで行う
+  return redirect("/home")
+}
 
 export async function action({ request }: Route.ActionArgs) {
   try {
     const requestData = await request.json()
     const result = LoginSchema.parse(requestData)
 
-    const response = await fetch("https://railway.bookreview.techtrain.dev/signin", {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(result)
     })
 
-    // TODO
+    const responseData = await response.json()
+
+    if (responseData.ok !== true || "token" in responseData !== true) {
+      console.error(responseData)
+      throw new Error()
+    }
+
+    return redirect("/home", { headers: { "Set-Cookie": await authCookie.serialize(responseData.token) } })
   } catch (e) {
     if (e instanceof ZodError) {
       return createRHFErrorData(e)
