@@ -1,11 +1,10 @@
 import type { Route } from "./+types"
 import { useEffect, useId, useState } from "react"
 import { useActionData, useSubmit } from "react-router"
-import { z, ZodError } from "zod/v4"
+import { ZodError } from "zod/v4"
 import { useForm } from "../../hooks/useForm"
-import { LoginSchema } from "../../schemas"
-
-type LoginFormValueType = z.infer<typeof LoginSchema>
+import { LoginSchema, type LoginSchemaValue } from "../../schemas"
+import createRHFErrorData from "../../utils/createRHFErrorData"
 
 export async function action({ request }: Route.ActionArgs) {
   try {
@@ -21,12 +20,7 @@ export async function action({ request }: Route.ActionArgs) {
     // TODO
   } catch (e) {
     if (e instanceof ZodError) {
-      return e
-        .issues
-        .reduce<{ errors: Record<string, string>[] }>(
-          (prv, cur) => (cur.path.length > 0)? { errors: [ ...prv.errors, { [cur.path[0]]: cur.message } ] } : prv,
-          { errors: [] }
-        )
+      return createRHFErrorData(e)
     } else {
       return { errors: [ { root: "unknown server error" } ] }
     }
@@ -37,11 +31,11 @@ export default function LoginPage() {
   const actionData = useActionData<typeof action>()
   const [ noValidate, setNoValidate ] = useState(false)
   const _onSubmit = useSubmit()
-  const { register, handleSubmit, errors, setError } = useForm<LoginFormValueType>({ schema: LoginSchema })
+  const { register, handleSubmit, errors, setError } = useForm<LoginSchemaValue>({ schema: LoginSchema })
   const emailInputId = useId()
   const passwordInputId = useId()
 
-  const onSubmit = (data: LoginFormValueType) => _onSubmit(data, { method: "POST", encType: "application/json" })
+  const onSubmit = (data: LoginSchemaValue) => _onSubmit(data, { method: "POST", encType: "application/json" })
 
   useEffect(() => {
     if (actionData === undefined) return
