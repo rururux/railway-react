@@ -1,6 +1,6 @@
 import type { Route } from "./+types"
 import { useEffect, useId, useState } from "react"
-import { useActionData, useSubmit } from "react-router"
+import { Link, useActionData, useSubmit } from "react-router"
 import { ZodError } from "zod/v4"
 import { useForm } from "../../hooks/useForm"
 import { LoginSchema, type LoginSchemaValue } from "../../schemas"
@@ -51,20 +51,23 @@ export default function LoginPage() {
 
   return (
     <div className="h-dvh grid place-items-center">
-      <form className="w-md rounded-md flex flex-col px-4 py-6 gap-4 border-gray-500 border-2" noValidate={noValidate} onSubmit={handleSubmit(onSubmit)}>
-        {errors.root && <span className="text-red-500">{errors.root.message}</span>}
-        <div className="grid gap-2">
-          <label htmlFor={emailInputId}>メール:</label>
-          <input id={emailInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="email" required {...register("email")} />
-          {errors.email && <span className="text-red-500">{errors.email.message}</span>}
-        </div>
-        <div className="grid gap-2">
-          <label htmlFor={passwordInputId}>パスワード:</label>
-          <input id={passwordInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="password" required minLength={7} {...register("password")} />
-          {errors.password && <span className="text-red-500">{errors.password.message}</span>}
-        </div>
-        <button className="text-white bg-blue-600 w-fit px-8 py-2 rounded-sm">ログイン</button>
-      </form>
+      <div className="flex flex-col gap-4">
+        <form className="w-md rounded-md flex flex-col px-4 py-6 gap-4 border-gray-500 border-2" noValidate={noValidate} onSubmit={handleSubmit(onSubmit)}>
+          {errors.root && <span className="text-red-500">{errors.root.message}</span>}
+          <div className="grid gap-2">
+            <label htmlFor={emailInputId}>メール:</label>
+            <input id={emailInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="email" required {...register("email")} />
+            {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+          </div>
+          <div className="grid gap-2">
+            <label htmlFor={passwordInputId}>パスワード:</label>
+            <input id={passwordInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="password" required minLength={7} {...register("password")} />
+            {errors.password && <span className="text-red-500">{errors.password.message}</span>}
+          </div>
+          <button className="text-white bg-blue-600 font-bold w-fit px-8 py-2 rounded-sm">ログイン</button>
+        </form>
+        <Link className="text-blue-600 border-2 border-blue-600 font-bold w-fit px-4 py-2 rounded-sm self-end" to="/signup">新規登録 &gt;</Link>
+      </div>
     </div>
   )
 }
