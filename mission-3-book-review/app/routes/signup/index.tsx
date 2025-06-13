@@ -73,7 +73,7 @@ export default function SignUpPage() {
   const actionData = useActionData<typeof action>()
   const [ noValidate, setNoValidate ] = useState(false)
   const _onSubmit = useSubmit()
-  const { register, handleSubmit, errors, setError, setValue } = useForm<SignUpSchemaValue>({ schema: SignUpSchema })
+  const { register, handleSubmit, formState: { errors }, setError, setValue } = useForm<SignUpSchemaValue>({ schema: SignUpSchema })
   const nameInputId = useId()
   const emailInputId = useId()
   const passwordInputId = useId()

@@ -30,7 +30,7 @@ export async function action({ request }: Route.ActionArgs) {
 
     const responseData = await response.json()
 
-    if (responseData.ok !== true || "token" in responseData !== true) {
+    if (response.ok !== true || "token" in responseData !== true) {
       console.error(responseData)
       throw new Error()
     }
@@ -49,7 +49,7 @@ export default function LoginPage() {
   const actionData = useActionData<typeof action>()
   const [ noValidate, setNoValidate ] = useState(false)
   const _onSubmit = useSubmit()
-  const { register, handleSubmit, errors, setError } = useForm<LoginSchemaValue>({ schema: LoginSchema })
+  const { register, handleSubmit, formState: { errors }, setError } = useForm<LoginSchemaValue>({ schema: LoginSchema })
   const emailInputId = useId()
   const passwordInputId = useId()
 

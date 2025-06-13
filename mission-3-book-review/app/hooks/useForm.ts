@@ -3,11 +3,7 @@ import { useForm as useRHFForm, type FieldValues } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 export function useForm<Value extends FieldValues, T extends z.ZodType<Value, Value> = z.ZodType<Value, Value>>({ schema }: { schema: T }) {
-  const { register, formState: { errors }, handleSubmit, setValue, setError } = useRHFForm<Value>({
+  return useRHFForm<Value>({
     resolver: zodResolver<Value, unknown, Value>(schema)
   })
-
-  return {
-    register, setValue, errors, setError, handleSubmit
-  }
 }
