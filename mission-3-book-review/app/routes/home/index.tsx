@@ -2,6 +2,7 @@ import { Link, useLoaderData, useSearchParams } from "react-router"
 import type { Route } from "./+types"
 import { useEffect } from "react"
 import { Layout } from "~/components/Layout"
+import { authCookie } from "~/.server/cookies"
 
 type Book = {
   id: string
@@ -16,8 +17,9 @@ export async function loader({ request }: Route.LoaderArgs) {
   const requestUrl = new URL(request.url)
   const offset = Number(requestUrl.searchParams.get("page") ?? 0) * 10
   const books = await fetch(`${import.meta.env.VITE_API_BASE_URL}/public/books?offset=${offset}`).then<Book[]>(r => r.json())
+  const isLoggined = (await authCookie.parse(request.headers.get("Cookie"))) !== null
 
-  return { books }
+  return { books, isLoggined }
 }
 
 export default function HomePage() {
@@ -32,7 +34,7 @@ export default function HomePage() {
   }, [ page, setSearchParams ])
 
   return (
-    <Layout>
+    <Layout isLoggined={loaderData.isLoggined}>
       <div className="grid place-items-center py-8">
         <div className="flex flex-col">
           <ul className="flex flex-col gap-4 max-w-lg">
