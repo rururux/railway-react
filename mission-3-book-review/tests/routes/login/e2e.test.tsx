@@ -23,7 +23,7 @@ test("required", async () => {
 
   // submit 失敗
   await expect.element(emailInput).toHaveFocus()
-  await expect.element(screen.getByText("メールアドレスを入力してください")).toBeInTheDocument()
+  await expect.element(screen.getByText("正しいメールアドレスを入力してください")).toBeInTheDocument()
   await expect.element(screen.getByText("最低7文字以上は入力してください")).toBeInTheDocument()
 })
 

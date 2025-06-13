@@ -5,7 +5,7 @@ import { ZodError } from "zod/v4"
 import { useForm } from "../../hooks/useForm"
 import { LoginSchema, type LoginSchemaValue } from "../../schemas"
 import createRHFErrorData from "../../utils/createRHFErrorData"
-import { authCookie } from "~/.server/cookies"
+import { authCookie } from "../../.server/cookies"
 
 export async function loader({ request }: Route.LoaderArgs) {
   const cookies = request.headers.get("Cookie")
@@ -74,12 +74,12 @@ export default function LoginPage() {
           {errors.root && <span className="text-red-500">{errors.root.message}</span>}
           <div className="grid gap-2">
             <label htmlFor={emailInputId}>メール:</label>
-            <input id={emailInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="email" required {...register("email")} />
+            <input id={emailInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="email" {...register("email")} />
             {errors.email && <span className="text-red-500">{errors.email.message}</span>}
           </div>
           <div className="grid gap-2">
             <label htmlFor={passwordInputId}>パスワード:</label>
-            <input id={passwordInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="password" required minLength={7} {...register("password")} />
+            <input id={passwordInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="password" minLength={7} {...register("password")} />
             {errors.password && <span className="text-red-500">{errors.password.message}</span>}
           </div>
           <button className="text-white bg-blue-600 font-bold w-fit px-8 py-2 rounded-sm">ログイン</button>

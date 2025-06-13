@@ -50,7 +50,7 @@ export async function action({ request }: Route.ActionArgs) {
         fetch(`${import.meta.env.VITE_API_BASE_URL}/users`, {
           method: "PUT",
           headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
-          body: JSON.stringify(result.name)
+          body: JSON.stringify({ name: result.name })
         })
       )
     }
@@ -62,7 +62,7 @@ export async function action({ request }: Route.ActionArgs) {
       requests.push(
         fetch(`${import.meta.env.VITE_API_BASE_URL}/uploads`, {
           method: "POST",
-          headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/xxx" },
+          headers: { "Authorization": `Bearer ${token}` },
           body: formData
         })
       )
@@ -72,7 +72,7 @@ export async function action({ request }: Route.ActionArgs) {
 
     if (responses.some(res => res.ok !== true)) {
       const firstErrorResponse = responses.find(res => res.ok !== true)
-      const firstErrorResponseData = firstErrorResponse?.text()
+      const firstErrorResponseData = await firstErrorResponse?.text()
 
       console.error(firstErrorResponseData)
 

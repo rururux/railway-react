@@ -6,7 +6,7 @@ import { useForm } from "../../hooks/useForm"
 import { SignUpSchema, type SignUpSchemaValue } from "../../schemas"
 import createRHFErrorData from "../../utils/createRHFErrorData"
 import Compressor from "compressorjs"
-import { authCookie } from "~/.server/cookies"
+import { authCookie } from "../../.server/cookies"
 
 export async function loader({ request }: Route.LoaderArgs) {
   const cookies = request.headers.get("Cookie")
@@ -45,10 +45,7 @@ export async function action({ request }: Route.ActionArgs) {
 
     const uploadImageResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/uploads`, {
       method: "POST",
-      headers: {
-        "Authorization": `Bearer ${signUpResponseData.token}`,
-        "Content-Type": "application/xxx"
-      },
+      headers: { "Authorization": `Bearer ${signUpResponseData.token}` },
       body: formData
     })
 
@@ -122,22 +119,22 @@ export default function SignUpPage() {
           {errors.root && <span className="text-red-500">{errors.root.message}</span>}
           <div className="grid gap-2">
             <label htmlFor={nameInputId}>ユーザー名:</label>
-            <input id={nameInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="text" required {...register("name")} />
+            <input id={nameInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="text" {...register("name")} />
             {errors.name && <span className="text-red-500">{errors.name.message}</span>}
           </div>
           <div className="grid gap-2">
             <label htmlFor={emailInputId}>メール:</label>
-            <input id={emailInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="email" required {...register("email")} />
+            <input id={emailInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="email" {...register("email")} />
             {errors.email && <span className="text-red-500">{errors.email.message}</span>}
           </div>
           <div className="grid gap-2">
             <label htmlFor={passwordInputId}>パスワード:</label>
-            <input id={passwordInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="password" required minLength={7} {...register("password")} />
+            <input id={passwordInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="password" minLength={7} {...register("password")} />
             {errors.password && <span className="text-red-500">{errors.password.message}</span>}
           </div>
           <div className="grid gap-2">
             <label htmlFor={iconInputId}>プロフィール画像:</label>
-            <input id={iconInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="file" accept="image/*" required onChange={handleChange} />
+            <input id={iconInputId} className="bg-white px-2 py-1 rounded-sm border-2 border-gray-400" type="file" accept="image/*" onChange={handleChange} />
             {errors.icon && <span className="text-red-500">{errors.icon.message}</span>}
           </div>
           <button className="text-blue-600 border-2 border-blue-600 font-bold w-fit px-8 py-2 rounded-sm">登録</button>
