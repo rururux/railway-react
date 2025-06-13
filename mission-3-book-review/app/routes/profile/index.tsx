@@ -7,7 +7,7 @@ import { UserDataSchema, type UserDataSchemaValue } from "~/schemas"
 import createRHFErrorData from "~/utils/createRHFErrorData"
 import { ZodError } from "zod/v4"
 import Compressor from "compressorjs"
-import { Header } from "~/components/Header"
+import { Layout } from "~/components/Layout"
 
 export async function loader({ request }: Route.LoaderArgs) {
   const cookies = request.headers.get("Cookie")
@@ -136,8 +136,7 @@ export default function Profile() {
   }
 
   return (
-    <>
-      <Header />
+    <Layout>
       <main className="grid place-items-center min-h-dvh">
         <form className="w-lg p-4 border-2 border-gray-400 rounded-md grid gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-1">
@@ -158,6 +157,6 @@ export default function Profile() {
           <button className="mt-4 w-fit px-4 py-2 text-white bg-blue-600 rounded-sm justify-self-end disabled:text-black disabled:bg-gray-400" disabled={!isDirty}>更新</button>
         </form>
       </main>
-    </>
+    </Layout>
   )
 }
