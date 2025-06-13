@@ -79,7 +79,7 @@ export default function CreateReviewPage() {
           </div>
           <div className="contents">
             <label className="align-top justify-self-end" htmlFor={reviewInputId}>レビュー:</label>
-            <textarea id={reviewInputId} className="px-2 py-1 outline-2 outline-gray-500 rounded-sm h-28" {...register("review", { required: true })}></textarea>
+            <input id={reviewInputId} className="px-2 py-1 outline-2 outline-gray-500 rounded-sm h-28" type="text" {...register("review", { required: true })}></input>
           </div>
           <button className="col-start-2 mt-4 w-fit px-4 py-2 text-white bg-blue-600 rounded-sm justify-self-end disabled:text-black disabled:bg-gray-400" disabled={!isDirty && isValid}>作成</button>
         </form>
