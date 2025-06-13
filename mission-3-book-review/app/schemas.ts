@@ -18,3 +18,11 @@ export const UserDataSchema = z.strictObject({
   icon: z.optional(z.file())
 })
 export type UserDataSchemaValue = z.infer<typeof UserDataSchema>
+
+export const BookReviewSchema = z.strictObject({
+  title: z.string().min(1),
+  url: z.string(),
+  detail: z.string().min(1),
+  review: z.string().min(1)
+})
+export type BookReviewSchemaType = z.infer<typeof BookReviewSchema>

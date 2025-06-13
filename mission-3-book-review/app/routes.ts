@@ -7,4 +7,5 @@ export default [
   route("/signup", "routes/signup/index.tsx"),
   route("/home", "routes/home/index.tsx"),
   route("/profile", "routes/profile/index.tsx"),
+  route("/new", "routes/new/index.tsx"),
 ] satisfies RouteConfig
