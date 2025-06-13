@@ -12,3 +12,9 @@ export const SignUpSchema = z.strictObject({
   icon: z.file("プロフィール画像を設定してください")
 })
 export type SignUpSchemaValue = z.infer<typeof SignUpSchema>
+
+export const UserDataSchema = z.strictObject({
+  name: z.optional(z.string().min(1)),
+  icon: z.optional(z.file())
+})
+export type UserDataSchemaValue = z.infer<typeof UserDataSchema>
