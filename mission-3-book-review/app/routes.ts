@@ -8,4 +8,5 @@ export default [
   route("/home", "routes/home/index.tsx"),
   route("/profile", "routes/profile/index.tsx"),
   route("/new", "routes/new/index.tsx"),
+  route("/detail/:id", "routes/detail/index.tsx"),
 ] satisfies RouteConfig

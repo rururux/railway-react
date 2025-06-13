@@ -37,20 +37,22 @@ export default function HomePage() {
         <div className="flex flex-col">
           <ul className="flex flex-col gap-4 max-w-lg">
             {loaderData.books.map(book => (
-              <li className="border-2 rounded-md p-4 bg-blue-100" key={book.id}>
-                <div>
-                  <p>タイトル: {book.title}</p>
-                  <p>作品詳細: {book.detail}</p>
-                  <p className="overflow-ellipsis whitespace-nowrap">URL: {book.url}</p>
-                </div>
-                <div className="mt-4">
-                  <div className="flex gap-1 items-end">
-                    <svg className="text-gray-600" xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24"><path fill="currentColor" d="M12 12q-1.65 0-2.825-1.175T8 8t1.175-2.825T12 4t2.825 1.175T16 8t-1.175 2.825T12 12m-8 8v-2.8q0-.85.438-1.562T5.6 14.55q1.55-.775 3.15-1.162T12 13t3.25.388t3.15 1.162q.725.375 1.163 1.088T20 17.2V20z" /></svg>
-                    <p className="border-2 rounded-xl p-4 min-w-sm bg-white">{book.review}</p>
+              <Link to={`/detail/${book.id}`} key={book.id}>
+                <li className="border-2 rounded-md p-4 bg-blue-100">
+                  <div>
+                    <p>タイトル: {book.title}</p>
+                    <p>作品詳細: {book.detail}</p>
+                    <p className="overflow-ellipsis whitespace-nowrap">URL: {book.url}</p>
                   </div>
-                  <p className="text-gray-500">{book.reviewer}</p>
-                </div>
-              </li>
+                  <div className="mt-4">
+                    <div className="flex gap-1 items-end">
+                      <svg className="text-gray-600" xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24"><path fill="currentColor" d="M12 12q-1.65 0-2.825-1.175T8 8t1.175-2.825T12 4t2.825 1.175T16 8t-1.175 2.825T12 12m-8 8v-2.8q0-.85.438-1.562T5.6 14.55q1.55-.775 3.15-1.162T12 13t3.25.388t3.15 1.162q.725.375 1.163 1.088T20 17.2V20z" /></svg>
+                      <p className="border-2 rounded-xl p-4 min-w-sm bg-white">{book.review}</p>
+                    </div>
+                    <p className="text-gray-500">{book.reviewer}</p>
+                  </div>
+                </li>
+              </Link>
             ))}
           </ul>
           <div className="flex py-4">
