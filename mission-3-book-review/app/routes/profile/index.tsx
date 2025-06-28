@@ -137,6 +137,8 @@ export default function Profile() {
 
   return (
     <Layout>
+      <title>プロフィール</title>
+      <meta name="description" content="プロフィール画面です。" />
       <main className="grid place-items-center min-h-dvh">
         <form className="w-lg p-4 border-2 border-gray-400 rounded-md grid gap-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-1">

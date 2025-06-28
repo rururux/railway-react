@@ -69,6 +69,8 @@ export default function LoginPage() {
 
   return (
     <div className="h-dvh grid place-items-center">
+      <title>ログイン</title>
+      <meta name="description" content="ログイン画面です。" />
       <div className="flex flex-col gap-4">
         <form className="w-md rounded-md flex flex-col px-4 py-6 gap-4 border-gray-500 border-2" noValidate={noValidate} onSubmit={handleSubmit(onSubmit)}>
           {errors.root && <span className="text-red-500">{errors.root.message}</span>}

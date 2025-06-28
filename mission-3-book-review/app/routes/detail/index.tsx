@@ -122,6 +122,8 @@ function ReviewDetail({ reviewPromise }: { reviewPromise: Promise<BookReview> })
 
   return (
     <div className="grid">
+      <title>レビュー詳細</title>
+      <meta name="description" content="レビュー詳細画面です。" />
       <form className="grid gap-x-2 gap-y-4 grid-cols-[minmax(0,_auto)_1fr]" method="PUT" onSubmit={handleSubmit(onSubmit)}>
         {review.isMine && (
           <div className="flex gap-2 justify-end col-start-1 col-span-2">

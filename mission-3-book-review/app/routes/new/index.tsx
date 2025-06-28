@@ -62,6 +62,8 @@ export default function CreateReviewPage() {
 
   return (
     <Layout>
+      <title>レビュー作成</title>
+      <meta name="description" content="レビュー作成画面です。" />
       <div className="w-lg self-center p-4 border-2 border-gray-400 rounded-md">
         <h2 className="text-2xl mb-4">レビュー作成</h2>
         <form className="grid gap-x-2 gap-y-4 grid-cols-[minmax(0,_auto)_1fr]" onSubmit={handleSubmit(onSubmit)}>
