@@ -128,7 +128,7 @@ function ReviewDetail({ reviewPromise }: { reviewPromise: Promise<BookReview> })
         {review.isMine && (
           <div className="flex gap-2 justify-end col-start-1 col-span-2">
             <button className="text-blue-600 border-2 border-blue-600 font-bold w-fit px-2 py-1 rounded-sm justify-self-end" onClick={handleEditButtonClick}>編集</button>
-            <button className="text-red-600 border-2 border-red-600 font-bold w-fit px-2 py-1 rounded-sm justify-self-end" onClick={handleDeleteButtonClick}>削除</button>
+            <button className="text-red-600 border-2 border-red-600 font-bold w-fit px-2 py-1 rounded-sm justify-self-end" type="button" onClick={handleDeleteButtonClick}>削除</button>
           </div>
         )}
         <div className="contents">
