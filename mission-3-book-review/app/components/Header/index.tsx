@@ -11,7 +11,7 @@ export function Header({ isLoggined = true }: { isLoggined?: boolean }) {
       {isLoggined && (
         <>
           <Link className="text-white" to="/profile">ユーザー情報</Link>
-          <button className="text-red-300 cursor-pointer" onClick={handleClick}>ログアウト</button>
+          <button className="px-3 py-1 text-white bg-red-600 cursor-pointer rounded-md" onClick={handleClick}>ログアウト</button>
         </>
       )}
     </header>
